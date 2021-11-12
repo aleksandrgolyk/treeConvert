@@ -1,24 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import {Button, Col, Container, Row} from "@qonsoll/react-design";
+import Tree from "./Tree";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      // <Container>
+      //   <Row>
+      //     <Col order={2} background='pink' cw={2}> <Button width="200px" height='200px' >qq</Button>CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2CW 2</Col>
+      //     <Col background='skyblue' cw={7}>  CW 7 CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7CW 7</Col>
+      //  <Col cw={2} background='pink'>qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</Col>
+      //   </Row>
+      // </Container>
+      <Tree />
   );
 }
 
