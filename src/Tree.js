@@ -103,10 +103,10 @@ const Tree = () => {
 
           return (
           <Tree
-              className="draggable-tree"
-              defaultExpandedKeys={state.expandedKeys}
-              draggable
-              blockNode
+              // className="draggable-tree"
+              // defaultExpandedKeys={state.expandedKeys}
+              // draggable
+              // blockNode
               onDragEnter={onDragEnter}
               onDrop={onDrop}
               treeData={state.gData}
