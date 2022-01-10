@@ -2,7 +2,7 @@ import "@qonsoll/react-design/dist/styles/styles.css";
 import "@qonsoll/react-design/dist/styles/vars/index.css";
 import '@qonsoll/next-landing-components/dist/styles/vars.css'
 import {useState, useRef, useEffect} from "react";
-import {Avatar, Button, Title, Col, Row, Container} from "@qonsoll/react-design";
+import {Avatar, Button, Title, Col, Row, Container, Box} from "@qonsoll/react-design";
 // import {Col, Row, Container} from '@qonsoll/next-landing-components'
 
 export default function Test() {
@@ -96,8 +96,13 @@ export default function Test() {
     setWrapperHeight(e.target.value);
   };
   const handleWidthChange = (e) => {
-    e.preventDefault()
     setWrapperWidth(e.target.value);
+  };
+  const handleScaleChange = (e) => {
+    setScaleNum(e.target.value/100);
+    if (e.target.value > scaleNum){
+      setWrapperWidth(windowWidth)
+    }
   };
 
   return (
@@ -110,9 +115,10 @@ export default function Test() {
           <button onClick={() => handleSizeChange(4096, 2160)}>4K</button>
           <div>
             <p>Dimensions: Responsive</p>
-            <input type="number" value={wrapperWidth} placeholder='width' onBlur={handleWidthChange} onChange={handleWidthChange}/>x
+            <input type="number" value={wrapperWidth} placeholder='width' onChange={handleWidthChange}/>x
             <input type="number" ref={inputRef} placeholder='height' value={wrapperHeight}
                    onChange={handleHeightChange}/>
+            <input type="number" ref={inputRef} value={`${scaleNum}`* 100} placeholder='zoom, %' onChange={handleScaleChange}/>
           </div>
         </div>
         {node ? (
@@ -138,8 +144,8 @@ export default function Test() {
         ) : null}
 
         <div ref={wrapperRef} style={{display:'none'}} >
-          <Container>
-            <Row noGutters>
+          {/*<Container>*/}
+          {/*  <Row noGutters>*/}
               <Col cw={[6, 8, 12]} style={{backgroundColor: 'pink', color: 'gray'}}>
                 Col cw={wrapperWidth}
               </Col>
@@ -147,8 +153,9 @@ export default function Test() {
               <Avatar size='large'>Qonsoll avatar</Avatar>
               <Button type='primary' danger>QButton</Button>
               <Title variant="3">Title 2</Title>
-            </Row>
-          </Container>
+          <Box style={{width:'1000px'}} bg='blue'>Box width = 1000</Box>
+            {/*</Row>*/}
+          {/*</Container>*/}
         </div>
       </div>
   );
