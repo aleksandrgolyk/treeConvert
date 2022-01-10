@@ -4,19 +4,6 @@ import '@qonsoll/next-landing-components/dist/styles/vars.css'
 import {useState, useRef, useEffect} from "react";
 import {Avatar, Button, Title, Col, Row, Container} from "@qonsoll/react-design";
 // import {Col, Row, Container} from '@qonsoll/next-landing-components'
-// const Block = () => {
-//   return (
-//       <Container>
-//         <Row>
-//           <Col  bg='red' cw={9} style={{backgroundColor:'pink', color:'gray'}}>Col cw={3}</Col>
-//           <p className='ant-avatar'>Avatar</p>
-//           <Avatar size='large'>Qonsoll avatar</Avatar>
-//           <Button  type='primary' danger>QButton</Button>
-//           <Title variant="2">Title 2</Title>
-//         </Row></Container>
-//
-//   )
-// };
 
 export default function Test() {
   const [currentStyle, setCurrentStyle] = useState(null)
@@ -34,6 +21,7 @@ export default function Test() {
 
   }, [wrapperHeight, wrapperWidth]);
 
+//get all styles from qonsoll after component mount
   const getStyles = () => {
     let css = [];
     for (let i = 0; i < document.styleSheets.length; i++) {
@@ -64,7 +52,7 @@ export default function Test() {
   const windowHeight = window.outerHeight
 
   const frameWidthLimit =()=>{
-    if (wrapperWidth > windowWidth-10)
+    if (wrapperWidth > windowWidth)
       return windowWidth
     else return wrapperWidth
   }
@@ -84,15 +72,14 @@ export default function Test() {
       return windowHeight
     else return wrapperHeight
   }
-  console.log(wrapperWidth, windowWidth);
+  // console.log(wrapperWidth, windowWidth);
+
   const checkBlockOverLimit = () => {
     if (wrapperWidth > windowWidth) {
-      setScaleNum(windowWidth / wrapperWidth * 0.8)
-      // setScaleNum(0.5)
+      setScaleNum(windowWidth / wrapperWidth)
     }
     if (wrapperWidth < windowWidth + 1) {
       setScaleNum(1)
-      // setScaleNum(0.5)
     }
         // if (wrapperHeight > windowHeight) {
         //   setScaleNum(windowHeight / wrapperHeight * 0.9)
@@ -109,11 +96,12 @@ export default function Test() {
     setWrapperHeight(e.target.value);
   };
   const handleWidthChange = (e) => {
+    e.preventDefault()
     setWrapperWidth(e.target.value);
   };
 
   return (
-      <div className="App" style={{/*overflowX:'hidden', */backgroundColor:'pink'}}>
+      <div className="App" style={{backgroundColor:'pink'}}>
         <div style={{display: 'flex', justifyContent: 'center'}}>
           <button onClick={() => handleSizeChange(600, 600)}>600*600</button>
           <button onClick={() => handleSizeChange(375, 812)}>iPhone X</button>
@@ -122,8 +110,8 @@ export default function Test() {
           <button onClick={() => handleSizeChange(4096, 2160)}>4K</button>
           <div>
             <p>Dimensions: Responsive</p>
-            <input type="number" value={wrapperWidth} placeholder='width' onChange={handleWidthChange}/>x
-            <input ref={inputRef} type="number" placeholder='height' value={wrapperHeight}
+            <input type="number" value={wrapperWidth} placeholder='width' onBlur={handleWidthChange} onChange={handleWidthChange}/>x
+            <input type="number" ref={inputRef} placeholder='height' value={wrapperHeight}
                    onChange={handleHeightChange}/>
           </div>
         </div>
@@ -132,42 +120,28 @@ export default function Test() {
                 title="page"
                 width={frameWidthLimit()}
                 height={frameHeightLimit()}
-
-                style={{
-                                    boxSizing: "border-box",
-                  // transform: `scale(${scaleNum})`, transformOrigin: "0 0"
-                }}
-
+                //iframe content
                 srcDoc={`<html>
           <head>
             <link rel="stylesheet" href="styles.css" />
             <style>
             ${currentStyle};
-
             </style>
           </head>
-          <body 
-          style={{
-            boxSizing: "border-box",
-           transform: \`scale(${scaleNum})\`, 
-           transformOrigin: "0 0",
-            width:"500px"
-                }}>
-            ${node ? node.innerHTML : "Loading"}
+          <body>
+            <div style="transform: scale(${scaleNum}); transform-origin:0 0;box-sizing: border-box;">
+              ${node ? node.innerHTML : "Loading"}
+            </div>
           </body>
-          <script>
-              console.log('>>>', window.location)
-          </script>
         </html>`}
             />
         ) : null}
 
-        <div ref={wrapperRef} style={{display:'none', width:{frameWidthLimit},
-          height:{frameHeightLimit}}} >
+        <div ref={wrapperRef} style={{display:'none'}} >
           <Container>
-            <Row>
+            <Row noGutters>
               <Col cw={[6, 8, 12]} style={{backgroundColor: 'pink', color: 'gray'}}>
-                Col cw={3}
+                Col cw={wrapperWidth}
               </Col>
               <p className='ant-avatar'>Avatar</p>
               <Avatar size='large'>Qonsoll avatar</Avatar>
@@ -176,10 +150,6 @@ export default function Test() {
             </Row>
           </Container>
         </div>
-        {/* <div className="w400"></div> */}
       </div>
   );
-}
-export const IframeContent = ()=>{
-
 }
